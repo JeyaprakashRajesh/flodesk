@@ -1,4 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+
 .auth-container {
     height: 100vh;
     width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--backgroundcolor);
+    align-items: center;
+    justify-content: center;
+}
+.auth-header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.auth-header-logo {
+    height: 5rem;
+    aspect-ratio: 1;
+}
+.auth-header-logo img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+.auth-header-title {
+    font-family: "montserrat alternates";
+    color: var(--textcolor);
+    margin-left: 1rem;
+    font-size: 1.3rem;
+}
+.auth-selector-container {
+    height: 3rem;
+    width: 20rem;
+    border-radius: 1000px;
+    padding: 0.5rem;
+    background-color: var(--accentcolor);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s linear;
+    position: relative;
+    
+}
+.auth-selector-container button {
+    height: 100%;
+    width: 49%;
+    border-radius: 1000px;
+    cursor: pointer;
+    font-family: "montserrat alternates";
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    background-color: transparent;
+    z-index: 5;
+}
+/* .auth-selector-container button.active {
+    background-color: var(--lightpurple);
+}
+
+.auth-selector-container button:active {
+    background-color: var(--lightpurple);
+} */
+
+.auth-selector-transition {
+    height: 80%;
+    position: absolute;
+    width: 49%;
+    background-color: var(--lightpurple);
+    z-index: 1;
+    border-radius: 1000px;
+    transition: all 0.2s ease;
+    left: 0.5rem;
+}
+.auth-selector-transition.signup-active {
+    left: 10.5rem; 
+}
+
+.auth-form-container {
+    height: 80%;
+    max-height: 550px;
+    width: 70%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2%;
+}
+.auth-form-heading {
+    font-size: 2rem;
+    font-family: "montserrat alternates";
+    font-weight: 600;
+    color: var(--textcolor);
+}
+.auth-form-elements-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+}
+.auth-form-element {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.9rem;
+    color: var(--textcolor);
+    font-family: "montserrat";
+    height: 33.333%;
+    justify-content: center;
+    font-weight: 600;
+
+}
+.auth-form-element label {
+    margin-bottom: 2%;
+    margin-left: 1%;
+}
+.auth-form-element input {
+    width: 90%;
+    padding: 1rem 5%;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--accentcolor);
+    color: var(--textcolor);
+    font-family: "montserrat";
+    font-size: 0.8rem;
+}
+
+
+
+
+
+.auth-form-button button{
+    font-family: "montserrat alternates";
+    font-weight: 700;
+    font-size: 1.1rem;
+    background-color: var(--lightpurple);
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 2.8rem;
+    border-radius: 1000px;
 }

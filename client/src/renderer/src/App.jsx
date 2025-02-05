@@ -3,6 +3,7 @@ import AuthScreen from "./Screens/AuthScreen"
 import { useNavigate } from "react-router-dom"
 
 import {Routes,Route} from "react-router-dom"
+import HomeScreen from "./Screens/HomeScreen"
 
 function App() {
   const ipcHandle = () => window.electron.ipcRenderer.send('ping')
@@ -12,6 +13,7 @@ function App() {
   }, [])
   useEffect(() => {
     const token = localStorage.getItem('token')
+    console.log(token)
     if(token){
       navigate('/home')
     } else {
@@ -23,6 +25,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/auth" element={<AuthScreen />} />
+        <Route path="/home" element={<HomeScreen />} />
       </Routes>
     </div>
   )
