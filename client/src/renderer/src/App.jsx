@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 
 import {Routes,Route} from "react-router-dom"
 import HomeScreen from "./Screens/HomeScreen"
+import ProjectScreen from "./Screens/ProjectScreen"
 
 function App() {
   const ipcHandle = () => window.electron.ipcRenderer.send('ping')
@@ -26,6 +27,7 @@ function App() {
       <Routes>
         <Route path="/auth" element={<AuthScreen />} />
         <Route path="/home" element={<HomeScreen />} />
+        <Route path="/project" element={<ProjectScreen />} />
       </Routes>
     </div>
   )

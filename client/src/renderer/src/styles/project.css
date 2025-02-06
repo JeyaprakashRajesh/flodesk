@@ -1,0 +1,7 @@
+.project-container {
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--backgroundcolor);
+    display: flex;
+    flex-direction:column;
+}   

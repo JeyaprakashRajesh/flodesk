@@ -21,7 +21,7 @@ export default function HomeScreen() {
                 headers: {
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-              });
+              });   
               setData(response.data);
               console.log("User data: ", response.data);
             } catch (err) {

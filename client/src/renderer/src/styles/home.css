@@ -157,6 +157,9 @@
     font-family: "montserrat";
     font-size: 2vw;
 }
+.home-projects-heading-add:hover {
+    cursor: pointer;
+}
 .home-no-projects {
     font-size: 1.1vw;
     font-weight: 600;
@@ -191,4 +194,49 @@
     justify-content: center;
     display: flex;
     cursor: pointer;
+}
+.home-projects-element-outer-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+
+}
+.home-project-element-container {
+    height: 240px;
+    width: 270px;
+    border-radius: 20px;
+    background-color: var(--accentcolor);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+.home-project-element-container:hover {
+    cursor: pointer;
+}
+.home-project-element-img {
+    height: 60%;
+    width: 100%;
+    background-color: gray;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+.home-project-element-content {
+    height: 40%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-family: "montserrat";
+    color: var(--textcolor);
+    font-size: 0.9rem;
+}   
+.home-project-element-name {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--lightpurple);
 }
