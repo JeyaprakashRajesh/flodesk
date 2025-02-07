@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { io } from "socket.io-client"; 
 import '../styles/project.css';
+import Tools from '../components/ProjectScreen/Tools';
+import Canvas from '../components/ProjectScreen/canvas';
 
 const SOCKET_URL = "http://localhost:3000"; 
 
@@ -36,7 +38,7 @@ export default function ProjectScreen() {
         return () => {
             socket.disconnect();
         };
-    }, [project_id]);
+    }, [project_id]);   
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -46,10 +48,10 @@ export default function ProjectScreen() {
             {data ? (
                 <div className='project-container'>
                     <div className="project-tools-container">
-
+                        <Tools />
                     </div>
                     <div className="project-content-container">
-
+                        <Canvas data={data} setData={setData} />
                     </div>
                 </div>
             ) : (

@@ -3,5 +3,89 @@
     width: 100vw;
     background-color: var(--backgroundcolor);
     display: flex;
-    flex-direction:column;
+    flex-direction:row;
+    overflow: hidden;
 }   
+.project-tools-container {
+    height: 100%;
+    width: 70px;
+}
+.project-content-container {
+    height: 100%;
+    width: calc(100% - 70px);
+}
+.tools-container {
+    height: 100%;
+    width: 100%;
+    background-color: var(--accentcolor);
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    z-index: 1;
+}
+.tools-logo-container {
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.tools-logo-container img {
+    width: 70%;
+}
+
+
+
+.tools-clock-container {
+    height: 100px;
+    width: 100px;
+}
+
+
+
+
+
+
+.canvas-outer-container {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: relative;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .canvas {
+    width: 4000px;
+    height: 3000px;
+    border: 10px solid white;
+    position: absolute;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .canvas-content {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .canvas-item {
+    padding: 10px;
+    background: lightgray;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  .clock, .timer, .note {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .note {
+    background-color: yellow;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 3px;
+  }
+  

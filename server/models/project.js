@@ -30,6 +30,11 @@ const ProjectModel = new schema({
     created_at: {
         type: Date,
         default: Date.now,
+    },
+    backgroundcolor : {
+        type : String,
+        default : "#212121",
+        required : true
     }
 });
 
