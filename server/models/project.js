@@ -35,7 +35,20 @@ const ProjectModel = new schema({
         type : String,
         default : "#212121",
         required : true
-    }
+    },
+    elements : [
+        {
+            name : {
+                type : String,
+                required : true
+            },
+            props : {
+                type : Object,
+                required : true
+            }
+            
+        }
+    ]
 });
 
 
