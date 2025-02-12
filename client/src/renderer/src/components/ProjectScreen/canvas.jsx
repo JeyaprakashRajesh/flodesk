@@ -1,77 +1,60 @@
 import React, { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { io } from "socket.io-client";
+import CanvasTools from "./Tools/canvasTools";
 
-export default function MovableCanvas({ data, setData }) {
+const socket = io("http://localhost:3000");
+
+const MovableCanvas = ({ data, setData }) => {
   const containerRef = useRef(null);
-  const [containerSize, setContainerSize] = useState({ width: 0, height: 0 });
-  const [scale] = useState(1); 
-  const [position, setPosition] = useState({ x: 0, y: 0 }); 
-  const [isDragging, setIsDragging] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isCanvasDragging, setIsCanvasDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 
   const canvasSize = { width: 4000, height: 3000 };
 
+  // Center canvas on load
   useEffect(() => {
-    const updateContainerSize = () => {
-      if (containerRef.current) {
-        const { clientWidth, clientHeight } = containerRef.current;
-        setContainerSize({ width: clientWidth, height: clientHeight });
-      }
-    };
-
-    updateContainerSize();
-    window.addEventListener("resize", updateContainerSize);
-    return () => window.removeEventListener("resize", updateContainerSize);
+    const centerX = (window.innerWidth - canvasSize.width) / 2;
+    const centerY = (window.innerHeight - canvasSize.height) / 2;
+    setPosition({ x: centerX, y: centerY });
   }, []);
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDragging) {
-      setPosition({
-        x: e.clientX - dragStart.x,
-        y: e.clientY - dragStart.y,
-      });
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  
-  const handleWheel = (e) => {
-    if (e.shiftKey) {
-      setPosition((prev) => ({
-        x: prev.x - e.deltaY * 2, 
-        y: prev.y,
-      }));
-    } else if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
-      setPosition((prev) => ({
-        x: prev.x - e.deltaX * 2,
-        y: prev.y,
-      }));
-    } else {
-      setPosition((prev) => ({
-        x: prev.x,
-        y: prev.y - e.deltaY * 2,
-      }));
-    }
-    e.preventDefault(); 
-  };
-  
 
   useEffect(() => {
     const container = containerRef.current;
+
+    const handleMouseDown = (e) => {
+      // Right-click to move the canvas
+      if (e.button === 2) {
+        setIsCanvasDragging(true);
+        setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
+      }
+    };
+
+    const handleMouseMove = (e) => {
+      if (isCanvasDragging) {
+        setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsCanvasDragging(false);
+    };
+
+    const handleWheel = (e) => {
+      setPosition((prev) => ({
+        x: prev.x - (e.shiftKey ? e.deltaY * 2 : e.deltaX * 2),
+        y: prev.y - (!e.shiftKey ? e.deltaY * 2 : 0),
+      }));
+      e.preventDefault();
+    };
+
     if (container) {
+      container.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right-click menu
       container.addEventListener("mousedown", handleMouseDown);
       container.addEventListener("mousemove", handleMouseMove);
       container.addEventListener("mouseup", handleMouseUp);
-      container.addEventListener("mouseleave", handleMouseUp); 
-      container.addEventListener("wheel", handleWheel, { passive: false }); 
+      container.addEventListener("mouseleave", handleMouseUp);
+      container.addEventListener("wheel", handleWheel, { passive: false });
     }
 
     return () => {
@@ -83,7 +66,20 @@ export default function MovableCanvas({ data, setData }) {
         container.removeEventListener("wheel", handleWheel);
       }
     };
-  }, [isDragging, dragStart, position]);
+  }, [isCanvasDragging, dragStart, position]);
+
+  useEffect(() => {
+    socket.on("elementCreated", (response) => {
+      console.log("Element added:", response);
+      if (response.success && response.project) {
+        setData(response.project);
+      }
+    });
+
+    return () => {
+      socket.off("elementCreated");
+    };
+  }, [setData]);
 
   return (
     <div
@@ -91,19 +87,24 @@ export default function MovableCanvas({ data, setData }) {
       ref={containerRef}
       style={{ width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}
     >
-      <motion.div
+      <div
         className="canvas"
-        animate={{ x: position.x, y: position.y, scale }}
         style={{
           width: canvasSize.width,
           height: canvasSize.height,
           backgroundColor: data.backgroundcolor,
           position: "absolute",
+          left: position.x,
+          top: position.y,
         }}
       >
-        
-        <div className="canvas-content">🎨 Your Editable Canvas 🎨</div>
-      </motion.div>
+        {Array.isArray(data.elements) &&
+          data.elements.map((element, index) => (
+            <CanvasTools element={element} key={index} setData={setData} />
+          ))}
+      </div>
     </div>
   );
-}
+};
+
+export default MovableCanvas;

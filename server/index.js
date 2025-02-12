@@ -36,8 +36,8 @@ io.on("connection", (socket) => {
         try {
             console.log(`Creating element in project ${project_id}`);
             
-            const fakeReq = { body: { name, props }, params: { project_id } };
-            const fakeRes = {
+            const req = { body: { name, props }, params: { project_id } };
+            const res = {
                 status: (code) => ({
                     json: (response) => {
                         console.log("Response:", response);
@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
                 }),
             };
 
-            await CreateElement(fakeReq, fakeRes);
+            await CreateElement(req, res);
         } catch (error) {
             console.error("Error in createElement event:", error);
             io.to(socket.id).emit("elementError", { success: false, message: "Internal server error" });
@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
         console.log(`User disconnected: ${socket.id}`);
     });
 });
+
 
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

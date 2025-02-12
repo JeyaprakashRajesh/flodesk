@@ -46,6 +46,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  
 }
 .tools-content-element-container img {
   width: 50%;
@@ -75,6 +76,7 @@
   font-family : "montserrat";
   font-weight: 600;
   font-size: 17px;
+  cursor: pointer;
 }
 .tools-details-element-container img {
   flex: 1;

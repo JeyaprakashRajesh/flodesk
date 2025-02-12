@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { io } from "socket.io-client"; 
+import { io } from "socket.io-client";
 import '../styles/project.css';
 import Tools from '../components/ProjectScreen/Tools';
 import Canvas from '../components/ProjectScreen/canvas';
 
-const SOCKET_URL = "http://localhost:3000"; 
+const SOCKET_URL = "http://localhost:3000";
 
 export default function ProjectScreen() {
     const [data, setData] = useState(null);
@@ -17,11 +17,11 @@ export default function ProjectScreen() {
 
     useEffect(() => {
         console.log("Project ID:", project_id);
-        
+
         if (!project_id) return;
 
         const socket = io(SOCKET_URL);
-        console.log("Socket connected:", socket.connected);
+    console.log('Socket connected:', socket.connected)
 
         socket.on("projectData", (response) => {
             if (response.success) {
@@ -38,7 +38,7 @@ export default function ProjectScreen() {
         return () => {
             socket.disconnect();
         };
-    }, [project_id]);   
+    }, [project_id]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -48,7 +48,7 @@ export default function ProjectScreen() {
             {data ? (
                 <div className='project-container'>
                     <div className="project-tools-container">
-                        <Tools />
+                        <Tools project_id={project_id}/>
                     </div>
                     <div className="project-content-container">
                         <Canvas data={data} setData={setData} />
