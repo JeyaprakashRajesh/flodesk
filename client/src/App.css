@@ -9,3 +9,7 @@ body {
   background-color: whtie;
 }
 
+/* src/index.css */
+html, body {
+  overscroll-behavior: none;
+}
